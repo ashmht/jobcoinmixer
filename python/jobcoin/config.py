@@ -1,8 +1,5 @@
 import sys
-sys.exit('\n!!! Please update config.py with your personal Jobcoin URL and '
-         'remove this message.\n')
 
-# Replace the URL below
-API_BASE_URL = 'https://jobcoin.projecticeland.net/changeme/api'
-API_ADDRESS_URL = '{}/addresses'.format(API_BASE_URL)
-API_TRANSACTIONS_URL = '{}/transactions'.format(API_BASE_URL)
+API_BASE_URL = "https://jobcoin.gemini.com/mangle-hermit/api"
+API_ADDRESS_URL = f"{API_BASE_URL}/addresses"
+API_TRANSACTIONS_URL = f"{API_BASE_URL}/transactions"
