@@ -9,7 +9,7 @@ class Doler:
     def calculate_dole_amounts(cls, amount: Decimal, num_transactions: int):
         return cls.round_last(
             [
-                Decimal(i)
+                Decimal(i.item())
                 for i in multinomial(
                     int(amount), [1 / num_transactions] * num_transactions
                 )

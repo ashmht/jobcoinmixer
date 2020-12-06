@@ -1,7 +1,6 @@
+import uuid
 from decimal import Decimal
 from typing import List, Dict
-from uuid import UUID
-
 from jobcoin.addresses import Addresses
 from jobcoin.doler import Doler
 from jobcoin.fee import Fee
@@ -22,7 +21,7 @@ class JobCoin:
         self.customer_address_map[customer_id].extend(unused_addresses)
 
     def get_deposit_address(self, customer_id: int) -> str:
-        deposit_address = str(UUID())
+        deposit_address = str(uuid.uuid4().hex)
         self.deposit_addresses[customer_id] = deposit_address
         return deposit_address
 
@@ -43,10 +42,10 @@ class JobCoin:
                 destination=self.big_house_address,
                 amount=amount,
             )
-        self.dole(
-            amount=Decimal(amount),
-            customer_addresses=self.customer_address_map[customer_id],
-        )
+            self.dole(
+                amount=Decimal(amount),
+                customer_addresses=self.customer_address_map[customer_id],
+            )
 
     def dole(self, amount: Decimal, customer_addresses: List[str]):
         disburse_amount: Decimal = Fee.detect_fee(amount, len(customer_addresses))
