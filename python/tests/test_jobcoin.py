@@ -14,7 +14,7 @@ def response():
 
 
 def test_content(response):
-    assert 'Hello!' in response.content
+    assert 'Hello!' in str(response.content)
 
 
 def test_cli_basic():
