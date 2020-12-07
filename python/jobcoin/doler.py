@@ -12,9 +12,9 @@ from jobcoin.transactions import Transactions
 
 
 class Doler:
-    @classmethod
-    def calculate_dole_amounts(cls, amount: Decimal, num_transactions: int):
-        return cls.round_last(
+    @staticmethod
+    def calculate_dole_amounts(amount: Decimal, num_transactions: int):
+        return Doler.round_last(
             transactions=[
                 Decimal(i.item())
                 # Split amount into num_transactions where range(1, amount) has equal probability
@@ -25,16 +25,21 @@ class Doler:
             disburse_amount=amount,
         )
 
-    @classmethod
-    def round_last(cls, transactions: List[Decimal], disburse_amount: Decimal):
+    @staticmethod
+    def round_last(transactions: List[Decimal], disburse_amount: Decimal):
         # Add the fractional value to the last transaction_amount
         # If disburse_amount is 10.5 and transactions are 3,2,4, 1, this changes 1 to 1.5
         rounded_amount = disburse_amount % 1
         transactions[-1] += rounded_amount
         return transactions
 
-    @classmethod
-    def dole(cls, big_house_address, amount: Decimal, customer_addresses: List[str], delay: bool = True):
+    @staticmethod
+    def dole(
+        big_house_address: str,
+        amount: Decimal,
+        customer_addresses: List[str],
+        delay: bool = True,
+    ) -> List[str]:
         disburse_amount: Decimal = Fee.calculate_charge(amount, len(customer_addresses))
         # Have at least 3 transactions
         num_transactions = max(3, len(customer_addresses))
@@ -53,4 +58,3 @@ class Doler:
                 source=big_house_address, destination=destination, amount=str(amount),
             )
         return transaction_log
-
