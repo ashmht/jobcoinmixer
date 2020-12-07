@@ -38,6 +38,7 @@ def main(args=None):
                 deposit_address=deposit_address
             )
         )
+        # Update this to different addresses and amounts to test
         amount_to_mix = "20"
         Transactions.transfer_jobcoins(
             source="Alice", destination=deposit_address, amount=amount_to_mix
