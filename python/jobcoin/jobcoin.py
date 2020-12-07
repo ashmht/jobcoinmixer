@@ -1,10 +1,5 @@
 import uuid
-from decimal import Decimal
 from typing import List, Dict
-from jobcoin.addresses import Addresses
-from jobcoin.doler import Doler
-from jobcoin.fee import Fee
-from jobcoin.transactions import Transactions
 
 
 class JobCoin:
@@ -21,47 +16,11 @@ class JobCoin:
         self.customer_address_map[customer_id].extend(unused_addresses)
 
     def get_deposit_address(self, customer_id: int) -> str:
+        if self.deposit_addresses.get(customer_id, False):
+            return self.deposit_addresses.get(customer_id)
         deposit_address = str(uuid.uuid4().hex)
         self.deposit_addresses[customer_id] = deposit_address
         return deposit_address
 
-    def detect_transfer(self, customer_id: int) -> bool:
-        deposit_address = self.deposit_addresses.get(customer_id, False)
-        if not deposit_address:
-            return False
-        # Get balance and transactions from deposit address
-        balance, transactions = Addresses.get_balance_transactions(
-            deposit_address=deposit_address
-        )
-        return bool(balance)
-
-    def mix(self, customer_id: int, amount: str):
-        if self.detect_transfer(customer_id=customer_id):
-            Transactions.transfer_jobcoins(
-                source=self.deposit_addresses[customer_id],
-                destination=self.big_house_address,
-                amount=amount,
-            )
-            self.dole(
-                amount=Decimal(amount),
-                customer_addresses=self.customer_address_map[customer_id],
-            )
-
-    def dole(self, amount: Decimal, customer_addresses: List[str]):
-        disburse_amount: Decimal = Fee.detect_fee(amount, len(customer_addresses))
-        print(disburse_amount)
-        transaction_amounts: List[Decimal] = Doler.calculate_dole_amounts(
-            amount, len(customer_addresses)
-        )
-        print(transaction_amounts)
-        transaction_amounts: List[Decimal] = Doler.round_last(
-            transactions=transaction_amounts
-        )
-        [
-            Transactions.transfer_jobcoins(
-                source=self.big_house_address,
-                destination=destination,
-                amount=transaction_amounts.pop(),
-            )
-            for destination in customer_addresses
-        ]
+    def get_customer_addresses(self, customer_id: int) -> List[str]:
+        return self.customer_address_map.get(customer_id, [])

@@ -13,6 +13,6 @@ class Transactions:
         )
         response = requests.post(url=API_TRANSACTIONS_URL, data=transaction_details,)
         if response.status_code == HTTPStatus.OK:
-            return f"{amount} JoinCoins transferred to {destination}"
+            return f"{amount} JobCoins transferred to {destination}"
         elif response.status_code == HTTPStatus.UNPROCESSABLE_ENTITY:
             return "Insufficient Balance"
