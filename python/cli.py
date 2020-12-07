@@ -38,8 +38,9 @@ def main(args=None):
                 deposit_address=deposit_address
             )
         )
+        amount_to_mix = "20"
         Transactions.transfer_jobcoins(
-            source="Alice", destination=deposit_address, amount="20"
+            source="Alice", destination=deposit_address, amount=amount_to_mix
         )
         mixer = Mixer(jobcoin=jobcoin)
         mixer.mix(
