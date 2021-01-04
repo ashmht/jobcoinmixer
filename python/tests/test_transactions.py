@@ -21,4 +21,4 @@ class TestTransactions:
         response = Transactions.transfer_jobcoins(
             source=source, destination=destination, amount=amount
         )
-        assert response == f"Insufficient Balance"
+        assert response == "Insufficient Balance"

@@ -27,5 +27,5 @@ The BigHouse Address would be a pool of addresses rather than a single one used 
 Also we could maintain an internal mapping of customers and their hashed addresses instead plain_text address, if 
 in case the transactions are compromised.
 
-We could also hash the amounts if some tried to use combinatorial brute force.
+We could also hash the amounts if someone tried to use combinatorial brute force.
 These are potential TODOs in addition to writing more tests. 

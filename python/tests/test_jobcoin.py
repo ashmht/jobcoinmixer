@@ -1,9 +1,7 @@
-#!/usr/bin/env python
 import pytest
 import re
 from click.testing import CliRunner
 
-from ..jobcoin import config
 from .. import cli
 
 
