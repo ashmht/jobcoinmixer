@@ -39,13 +39,13 @@ def main(args=None):
             )
         )
         # Update this to different addresses and amounts to test
-        amount_to_mix = "20"
+        amount_to_deposit = "20"
         Transactions.transfer_jobcoins(
-            source="Alice", destination=deposit_address, amount=amount_to_mix
+            source="Alice", destination=deposit_address, amount=amount_to_deposit
         )
         mixer = Mixer(jobcoin=jobcoin)
         mixer.mix(
-            big_house_address="BigHouse", customer_id=customer_id, amount=amount_to_mix,
+            big_house_address="BigHouse", customer_id=customer_id
         )
 
 
